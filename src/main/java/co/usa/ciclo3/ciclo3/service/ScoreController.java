@@ -4,7 +4,7 @@
  */
 package co.usa.ciclo3.ciclo3.service;
 
-import co.usa.ciclo3.ciclo3.entities.Motorbike;
+import co.usa.ciclo3.ciclo3.entities.Score;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,40 +20,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 /**
  *
  * @author guard
  */
 @RestController
-@RequestMapping("/api/Motorbike")
+@RequestMapping("/api/Score")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class MotorbikeController {
-    
-     @Autowired
-    private MotorbikeService motorbikeService;
+public class ScoreController {
+   
+    @Autowired
+    private ScoreService scoreService;
     
     @GetMapping("/all")
-      public List<Motorbike> getMotorbike() {return motorbikeService.getAll();};
+      public List<Score> getScore() {return scoreService.getAll();};
 
     @GetMapping("/{id}")
-      public Optional<Motorbike> getCustome(@PathVariable("id") int motorbikeId) {
-          return motorbikeService.getMotorbike(motorbikeId);
-      }
-    @PostMapping("/save")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Motorbike save(@RequestBody Motorbike motorbike) {return motorbikeService.save(motorbike);};
+      public Optional<Score> getCustome(@PathVariable("id") int scoreId) {
+          return scoreService.getScore(scoreId);
+    }
     
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Motorbike update(@RequestBody Motorbike motorbike){
-        return motorbikeService.update(motorbike);
+    public Score update(@RequestBody Score score){
+        return scoreService.update(score);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean deleteMotorbike(@PathVariable("id") int id){
-        return motorbikeService.deleteMotorbike(id);
+    public boolean deleteScore(@PathVariable("id") int id){
+        return scoreService.deleteScore(id);
     }
+    
 }

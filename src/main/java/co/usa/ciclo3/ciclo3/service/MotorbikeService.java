@@ -43,4 +43,38 @@ public class MotorbikeService {
  
     }
     
+    public Motorbike update(Motorbike c){
+        if(c.getId()!=null){
+            Optional<Motorbike>g=motorbikeRepository.getMotorbike(c.getId());
+            if(!g.isEmpty()){
+                if(c.getName()!=null){
+                    g.get().setName(c.getName());
+                }
+                if(c.getBrand()!=null){
+                    g.get().setBrand(c.getBrand());
+                }
+                 if(c.getYear()!=null){
+                    g.get().setYear(c.getYear());
+                }
+                  if(c.getDescription()!=null){
+                    g.get().setDescription(c.getDescription());
+                }
+                return motorbikeRepository.save(g.get());
+
+            }
+        }
+        return c;
+
+    }
+
+    public boolean deleteMotorbike(int id){
+        Optional<Motorbike> c=getMotorbike(id);
+        if(!c.isEmpty()){
+            motorbikeRepository.delete(c.get());
+            return true;
+        }
+        return false;
+
+    }
+    
 }

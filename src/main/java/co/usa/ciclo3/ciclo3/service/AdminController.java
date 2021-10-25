@@ -4,7 +4,7 @@
  */
 package co.usa.ciclo3.ciclo3.service;
 
-import co.usa.ciclo3.ciclo3.entities.Motorbike;
+import co.usa.ciclo3.ciclo3.entities.Admin;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,40 +21,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 /**
  *
  * @author guard
  */
 @RestController
-@RequestMapping("/api/Motorbike")
+@RequestMapping(value="/api/Admin")
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-public class MotorbikeController {
-    
-     @Autowired
-    private MotorbikeService motorbikeService;
+public class AdminController {
+	
+	@Autowired
+    private AdminService adminService;
     
     @GetMapping("/all")
-      public List<Motorbike> getMotorbike() {return motorbikeService.getAll();};
+    public List<Admin> getAdmin() {return adminService.getAll();};
 
     @GetMapping("/{id}")
-      public Optional<Motorbike> getCustome(@PathVariable("id") int motorbikeId) {
-          return motorbikeService.getMotorbike(motorbikeId);
-      }
+    public Optional<Admin> getCustome(@PathVariable("id") int adminId) {
+        return adminService.getAdmin(adminId);
+    }
+    
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Motorbike save(@RequestBody Motorbike motorbike) {return motorbikeService.save(motorbike);};
+    public Admin save(@RequestBody Admin admin) {return adminService.save(admin);};
     
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Motorbike update(@RequestBody Motorbike motorbike){
-        return motorbikeService.update(motorbike);
+    public Admin update(@RequestBody Admin admin){
+        return adminService.update(admin);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean deleteMotorbike(@PathVariable("id") int id){
-        return motorbikeService.deleteMotorbike(id);
+    public boolean deleteAdmin(@PathVariable("id") int id){
+        return adminService.deleteAdmin(id);
     }
 }

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="application/json" >
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RETO 4 - CICLO3</title>
+        
+    </head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/misFunciones.js"></script>
+        <h1 style="text-align: center">RETO 4 - GRUPO 11 - EDDIE RENE REYES ARIAS</h1>
+	<div class="botonesPlatillas">
+
+        <input c type ="button" onclick="objetoCategoria()" title="Consultar CATEGORIA" value="Consultar CATEGORIA">
+		<input type ="button" onclick="objetoMotos()" title="Consultar MOTO" value="Consultar MOTO">
+		<input type ="button" onclick="objetoClientes()" title="Consultar CLIENTES" value="Consultar CLIENTES">
+		<input type ="button" onclick="objetoMensajes()" title="Consultar MENSAJES" value="Consultar MENSAJES">
+		<input type ="button" onclick="objetoReservas()" title="Consultar RESERVAS" value="Consultar RESERVAS">
+        <input type ="button" onclick="objetoScore()" title="Consultar SCORE" value="Consultar SCORE">
+        <input type ="button" onclick="objetoAdmin()" title="Consultar ADMIN" value="Consultar ADMIN">		
+	</div>
+        
+            <div id="verObjetosCategoria" style="display: none">
+                    <div id="resultadoCategoria" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                        <input type="text" id="idCategory" style="display: none">
+                        <input type="text" id="nameCategory" placeholder="Name" style="width: 200px">
+                       <input type="text" id="descripCategory" placeholder="Description" style="width: 200px">
+                    </div>
+                    <div id="opcionesGama" style="margin: 5px">
+                            <button class="boton_guardar" onclick="guardarInfoCategoria()">Guardar</button>
+                            <button class="boton_actualizar" onclick="actualizarInfoCategoria()">Actualizar</button>
+                    </div>
+            </div>
+
+
+            <div id="verObjetosMotos" style="display: none">
+                    <div id="resultadoMoto" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                        <input type="text" id="idMoto" style="display: none">
+                        <input type="text" id="nameMoto" placeholder="Name" style="width: 200px">
+                        <input type="text" id="brandMoto" placeholder="Brand" style="width: 200px">
+                        <input type="number" id="yearMoto" placeholder="Year" style="width: 200px">
+                        <input type="text" id="descripMoto" placeholder="Descriptions" style="width: 200px">
+                        <div class="lineaH" id="listasMotos" style="justify-content: center">
+                            <select id="categoriaMoto" required></select>
+                        </div>
+                    </div>
+                    <div id="opcionesMoto" style="margin: 5px">
+                            <button class="boton_guardar" onclick="guardarInfoMoto()">Guardar</button> 
+                            <button class="boton_actualizar" onclick="actualizarInfoMoto()">Actualizar</button>
+                    </div>
+            </div>
+
+
+            <div id="verObjetosClient" style="display: none">
+                    <div id="resultadoClient" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                       <input type="text" id="idClient" style="display: none">
+                       <input type="text" id="nameClient" placeholder="Name" style="width: 200px">
+                       <input type="text" id="emailClient" placeholder="Email" style="width: 200px">
+                       <input type="text" id="passwordClient" placeholder="Password" style="width: 200px">
+                       <input type="number" id="ageClient" placeholder="Age" style="width: 200px">
+                    </div>
+                    <div id="opcionesCliente" style="margin: 5px">
+                            <button class="boton_guardar" onclick="guardarInfoClient()">Guardar</button> 
+                            <button class="boton_actualizar" onclick="actualizarInfoClient()">Actualizar</button>
+                    </div>
+            </div>
+
+
+            <div id="verObjetosMensajes" style="display: none">
+                    <div id="resultadoMensajes" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                        <input type="text" id="idMessageMes" style="display: none">
+                        <input type="text" id="messageTextMes" placeholder="MENSAJE" style="width: 200px">
+                        <div class="lineaH" id="listasMensajes" style="justify-content: center">
+                            <select id="mensajeClient" required></select>
+                            <select id="mensajeMoto" required></select>
+                        </div>
+                    </div>
+                     <div id="opcionesMensaje" style="margin: 5px">
+                            <button class="boton_guardar" onclick="guardarInfoMensaje()">Guardar</button> 
+                            <button class="boton_actualizar" onclick="actualizarInfoMensaje()">Actualizar</button>
+                    </div>
+
+            </div>
+
+
+            <div id="verObjetosReservas" style="display: none">
+                    <div id="resultadoReservas" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                        <input type="text" id="idReservationMes" style="display: none">
+                        <input type="text" id="startDateRes" placeholder="FECHA INICIO" style="width: 200px">
+                        <input type="text" id="devolutionDateRes" placeholder="FECHA FIN" style="width: 200px">
+                        <div class="lineaH" id="listasReservasStatus" style="justify-content: center">
+                            <select id="statusRes" required>
+                                 <option value="" disabled selected hidden>Selec Status</option>
+                                 <option value="Programado">Programado</option>
+                                 <option value="Cancelado">Cancelado</option>
+                                 <option value="Realizado">Realizado</option>
+                             </select>
+                        </div>
+                        <div class="lineaH" id="listasReservas" style="justify-content: center">
+                            <select id="reservaClient" required></select>
+                            <select id="reservaMoto" required></select>
+                        </div>
+                    </div>
+                    <div id="opcionesReserva" style="margin: 5px">
+                        <button class="boton_guardar" onclick="guardarInfoReservas()">Guardar</button>
+                        <button class="boton_actualizar" onclick="actualizarInfoReservas()">Actualizar</button>
+                    </div>
+            </div>
+
+
+            <div id="verObjetosScore" style="display: none">
+                    <div id="resultadoScore" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                       <input type="text" id="idReservationMesSc" style="display: none">
+                       <input type="text" id="idScoreSc" style="display: none">
+                       <input type="number" id="scoSc" placeholder="Score" style="width: 200px">
+                       <input type="text" id="messaSc" placeholder="Mensaje" style="width: 200px">
+
+                    </div>
+                    <div id="opcionesScore" style="margin: 5px">
+                        <button class="boton_actualizar" onclick="actualizarInfoScore()">Actualizar</button>
+                    </div>
+            </div>
+
+
+            <div id="verObjetosAdmin" style="display: none">
+                    <div id="resultadoAdmin" style="margin: 10px"></div>
+                    <div style="margin: 5px">
+                       <input type="text" id="idAdmin" style="display: none">
+                       <input type="text" id="nameAdmin" placeholder="Name" style="width: 200px">
+                       <input type="text" id="emailAdmin" placeholder="Email" style="width: 200px">
+                       <input type="text" id="passwordAdmin" placeholder="Password" style="width: 200px">
+                    </div>
+                    <div id="opcionesAdmin" style="margin: 5px">
+                            <button class="boton_guardar" onclick="guardarInfoAdmin()">Guardar</button> 
+                            <button class="boton_actualizar" onclick="actualizarInfoAdmin()">Actualizar</button>
+                    </div>
+            </div>
+
+</body>
+</html>

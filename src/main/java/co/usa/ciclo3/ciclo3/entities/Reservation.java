@@ -8,14 +8,18 @@ package co.usa.ciclo3.ciclo3.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 /**
  *
@@ -23,7 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name="reservation")
-public class Reservation implements Serializable {
+public class Reservation implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -47,11 +51,30 @@ public class Reservation implements Serializable {
     @JsonIgnoreProperties({"reservations","messages"})
     private Client client;
     
-    private String score;
-
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reservations")
+    private Score score;
+    
     public Reservation() {
-        this.status = "created";
+        status = "created";
     }
+
+    public void setScore(Score score) {
+        if (score == null) {
+            if (this.score != null) {
+                this.score.setReservation(null);
+            }
+        }
+        else {
+            score.setReservation(this);
+        }
+        this.score = score;
+    }
+    
+
+    /*
+    @OneToOne(mappedBy = "reservation", cascade = CascadeType.PERSIST)
+    private Score score;*/
 
     public Integer getIdReservation() {
         return idReservation;
@@ -85,14 +108,6 @@ public class Reservation implements Serializable {
         this.status = status;
     }
 
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
     public Motorbike getMotorbike() {
         return motorbike;
     }
@@ -107,6 +122,10 @@ public class Reservation implements Serializable {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Score getScore() {
+        return score;
     }
     
 }

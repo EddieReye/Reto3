@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ClientRepository {
     
-    @Autowired
+    @Autowired 
   private ClientCrud clientCrudRepository;
   
   public List<Client> getAll() {return (List<Client>) clientCrudRepository.findAll();};
@@ -27,4 +27,5 @@ public class ClientRepository {
   
   public Client save(Client client) { return clientCrudRepository.save(client);};
     
+  public void delete(Client client){ clientCrudRepository.delete(client);};
 }
