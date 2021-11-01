@@ -93,28 +93,20 @@ function traerInformacionMoto(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoMoto").empty();
-                let miTabla ="<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>NAME</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>BRAND</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>YEAR</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>DESCRIPCION</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>CATEGORY</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>"; 
+                let miTabla ='<div class="container"><div  class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-	        miTabla += "<td style='text-align: center;'>"+ respuesta[i].name+ '</td>'; 		
-	        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].brand+ '</td>'; 		
-	        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].year+ '</td>'; 		
-	        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].description+ '</td>'; 		
-	        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].category.name+ '</td>';
-                miTabla += '<td><button  onclick="editarRegistroMoto('+respuesta[i].id+' )">Editar</button>';
-		miTabla += '<td><button  onclick="eliminarRegistroMoto('+respuesta[i].id+' )">Eliminar</button>';
-		miTabla += '</tr>';
+			miTabla += <div class="card m-2" >
+	                           <div class="card-body" >
+		 <h5 class ="card-title">  ${respuesta[i].id} - ${respuesta[i].brand}</h5> 		
+		 <h6 class ="card-subtitle mb-2 text-muted">  ${respuesta[i].name} </h6> 		
+		 <p class= "card-text"> ${respuesta[i].model} <br> 		
+		                        ${respuesta[i].category.name}</p>
+	 <button class="btn btn-primary" onclick="editarRegistro(${respuesta[i].id} )" >Editar</button>
+	 <button  class="btn btn-danger" onclick="eliminarRegistro(${respuesta[i].id} )">Borrar</button>	  
+         </div>
+	 </div>
 		}
-                miTabla += '</table>';
+                miTabla += '</div></div>';
                 $("#resultadoMoto").append(miTabla);
                 $("#idMoto").val("");
 		$("#nameMoto").val("");
@@ -191,7 +183,7 @@ function guardarInfoMoto(){
     }
 }
 
-function editarRegistroMoto (idMoto){
+function editarRegistroMotorbike (idMoto){
     $('#listasMotos').hide();
     $.ajax({    
     url : 'http://localhost/api/Motorbike/'+idMoto,
@@ -239,7 +231,7 @@ function actualizarInfoMoto(){
 	});
 }
 
-function eliminarRegistroMoto(idMoto){
+function eliminarRegistroMotorbike(idMoto){
 	$.ajax(    
     'http://localhost/api/Motorbike/'+idMoto,
 	{type : 'DELETE',
@@ -267,20 +259,21 @@ function traerInfoCategoria(){
   
     success : function(respuesta) {
 		console.log(respuesta);
-		$("#resultadoCategoria").empty();
-                let miTabla = "<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>NAME</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>DESCRIPCION</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>";    
+		$("#resultadoCategoria").empty(); 
+		let miTabla = '<div class="container"><div class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-                        miTabla += "<td style='text-align: center;'>"+ respuesta[i].name+ '</td>'; 				
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].description+ '</td>';
-                        miTabla += '<td><button  onclick="editarRegistroCategory('+respuesta[i].id+' )">Editar</button>';
-                        miTabla += '<td><button  onclick="eliminarRegistroCategory('+respuesta[i].id+' )">Eliminar</button>';
-                        miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Nombre: ${respuesta[i].name}</h5> 				
+					<p class= "card-text" align="left">Descripcion: ${respuesta[i].description}</p>
+                                        <button  onclick="editarRegistroCategory(${respuesta[i].id} )" >Editar</button>
+					<button  onclick="eliminarRegistroCategory(${respuesta[i].id} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-                miTabla += '</table>';
+                miTabla += '</div></div>';
                 $("#resultadoCategoria").append(miTabla);
                 $("#idCategory").val("");
                 $("#nameCategory").val("");
@@ -387,22 +380,21 @@ function traerInformacionClient(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoClient").empty();
-                let miTabla = "<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>NAME</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>EMAIL</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>AGE</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>";    
+		let miTabla = '<div class="container"><div class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-                        miTabla += "<td style='text-align: center;'>"+ respuesta[i].name+ '</td>'; 				
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].email+ '</td>';
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].age+ '</td>';
-                        miTabla += '<td><button  onclick="editarRegistroClient('+respuesta[i].idClient+' )">Editar</button>';
-                        miTabla += '<td><button  onclick="eliminarRegistroClient('+respuesta[i].idClient+' )">Eliminar</button>';
-                        miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Nombre: ${respuesta[i].name}</h5> 		
+                                        <h6 class ="card-subtitle mb-2 text-muted">Edad: ${respuesta[i].age} </h6> 		
+					<p class= "card-text"> ${respuesta[i].email} <br> 		
+                                        <button  onclick="editarRegistroClient(${respuesta[i].idClient} )" >Editar</button>
+					<button  onclick="eliminarRegistroClient(${respuesta[i].idClient} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-        miTabla += '</table>';
+                miTabla += '</div></div>';
 	    $("#resultadoClient").append(miTabla);
 		$("#idClient").val("");
 		$("#nameClient").val("");
@@ -518,22 +510,21 @@ function traerInfoMensjaes(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoMensajes").empty();
-        let miTabla ="<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>CLIENTE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>MOTORBIKE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>MESSAGE</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>"; 
+                let miTabla = '<div class="container"><div class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].client.name+ '</td>'; 
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].motorbike.name+ '</td>'; 	
-			miTabla += "<td style='text-align: center;'>"+ respuesta[i].messageText+ '</td>'; 
-                        miTabla += '<td><button  onclick="editarRegistroMessage('+respuesta[i].idMessage+' )">Editar</button>';
-                        miTabla += '<td><button  onclick="eliminarRegistroMessage('+respuesta[i].idMessage+' )">Eliminar</button>';
-			miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Nombre: ${respuesta[i].client.name}</h5> 		
+                                        <h6 class ="card-subtitle mb-2 text-muted">${respuesta[i].motorbike.name} </h6> 		
+					<p class= "card-text"> ${respuesta[i].messageText}</p>
+                                        <button  onclick="editarRegistroMessage(${respuesta[i].idMessage} )" >Editar</button>
+					<button  onclick="eliminarRegistroMessage(${respuesta[i].idMessage} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-        miTabla += '</table>';
+                miTabla += '</div></div>';
 	    $("#resultadoMensajes").append(miTabla);
                 $("#idMessageMes").val("");
                 $("#messageTextMes").val("");
@@ -709,41 +700,30 @@ function traerInfoReservas(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoReservas").empty();
-        let miTabla ="<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>startDate</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>devolutionDate</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>MOTOBIKE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>idClient</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>NAME</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>EMAIL</td>";
-                        miTabla +="<td style='width: 200px; color: red; text-align: center;'>STATUS</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-                        miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>"; 
+                let miTabla = '<div class="container"><div class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].startDate+ '</td>'; 
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].devolutionDate+ '</td>';
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].motorbike.name+ '</td>'; 
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].client.idClient+ '</td>'; 	
-			miTabla += "<td style='text-align: center;'>"+ respuesta[i].client.name+ '</td>'; 
-			miTabla += "<td style='text-align: center;'>"+ respuesta[i].client.email+ '</td>';
-                        miTabla += "<td style='text-align: center;'>"+ respuesta[i].status+ '</td>'; 
-                        miTabla += '<td><button  onclick="editarRegistroReservation('+respuesta[i].idReservation+' )">Editar</button>';
-                        miTabla += '<td><button  onclick="eliminarRegistroReservation('+respuesta[i].idReservation+' )">Eliminar</button>';
-			miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Fecha: ${respuesta[i].startDate} - ${respuesta[i].devolutionDate} </h5> 	
+                                        <h6 class ="card-subtitle mb-2 text-muted">${respuesta[i].motorbike.name} </h6> 		
+					<p class= "card-text"> ${respuesta[i].client.name} <br> 		
+                                                               ${respuesta[i].client.email}<br>
+                                                               Status: ${respuesta[i].status}<br>
+                                                               Score:  ${verificarScore(respuesta[i].score)}</p>
+                                        <button  onclick="editarRegistroReservation(${respuesta[i].idReservation} )" >Editar</button>
+					<button  onclick="eliminarRegistroReservation(${respuesta[i].idReservation} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-        miTabla += '</table>';
+                miTabla += '</div></div>';
 	    $("#resultadoReservas").append(miTabla);
             $("#idReservationMes").val("");    
-            $('#listasReservas').show();
-            $('#listasReservasStatus').hide();
             $("#startDateRes").val("");
 	    $("#devolutionDateRes").val("");
             $("#statusRes").val("");
+            $('#listasReservas').show();
 	    pintarSelectResMoto();
 	    pintarSelectResClient();
 	},
@@ -752,6 +732,7 @@ function traerInfoReservas(){
     }
 });
 }
+
 
 function pintarSelectResMoto(){
 	$.ajax({    
@@ -805,34 +786,34 @@ function guardarInfoReservas(){
 
 	let selectedMoto = $("#reservaMoto").children(":selected").attr("value");
 	let selectedClient = $("#reservaClient").children(":selected").attr("value");
+        let selectedStatus = $("#statusRes").children(":selected").attr("value");
 
 	if (selectedClient.length > 0) {
-		if (selectedMoto.length > 0) {
-			let misDatos = {
+		if (selectedMoto.length > 0) {               
+                            let misDatos = {
 
-				startDate: $("#startDateRes").val(),
-				devolutionDate: $("#devolutionDateRes").val(),
-				client:{idClient:selectedClient},
-				motorbike:{id:selectedMoto},
-                                score:{sco: "SIN CALIFICAR"},
-                                score:{messa:" "}
+                                    startDate: $("#startDateRes").val(),
+                                    devolutionDate: $("#devolutionDateRes").val(),
+                                    client:{idClient:selectedClient},
+                                    motorbike:{id:selectedMoto},
+                                    status:selectedStatus,
 
-			};
-			let datosJson = JSON.stringify(misDatos); 
-			$.ajax(    
-			'http://localhost/api/Reservation/save',
-			{data: datosJson,
-			type : 'POST',
-			dataType : 'json',
-			contentType: "application/json; charset=utf-8",
-  
-			statusCode : {
-				201 :  function() {
-					alert("Registro Guardado!");
-					traerInfoReservas();	
-					}
-				}
-			});
+                            };
+                            let datosJson = JSON.stringify(misDatos); 
+                            $.ajax(    
+                            'http://localhost/api/Reservation/save',
+                            {data: datosJson,
+                            type : 'POST',
+                            dataType : 'json',
+                            contentType: "application/json; charset=utf-8",
+
+                            statusCode : {
+                                    201 :  function() {
+                                            alert("Registro Guardado!");
+                                            traerInfoReservas();	
+                                            }
+                                    }
+                            });
 		}
 		else
 		{
@@ -847,7 +828,6 @@ function guardarInfoReservas(){
 
 function editarRegistroReservation (idReservation){
     $('#listasReservas').hide();
-    $('#listasReservasStatus').show();
     $.ajax({    
     url : 'http://localhost/api/Reservation/'+idReservation,
     type : 'GET',
@@ -857,14 +837,16 @@ function editarRegistroReservation (idReservation){
     success : function(respuesta) {
 		console.log(respuesta);
                         $("#idReservationMes").val(respuesta.idReservation);
-			$("#startDateRes").val(respuesta.startDate);
-                        $("#devolutionDateRes").val(respuesta.devolutionDate);
+			$("#startDateRes").val(formatDate(respuesta.startDate));
+                        $("#devolutionDateRes").val(formatDate(respuesta.devolutionDate));
+               
 
 	},
     error : function(xhr, status) {
         alert('ha sucedido un problema:'+ status + json);
     }
     });
+    
 }
 
 function actualizarInfoReservas(){
@@ -913,7 +895,7 @@ function eliminarRegistroReservation(idReservation){
 
 function traerInfoScore(){
 	$.ajax({    
-    url : 'http://localhost/api/Reservation/all',
+    url : 'http://localhost/api/Score/all',
     type : 'GET',
     dataType : 'json',
     contentType: "application/json; charset=utf-8",
@@ -921,32 +903,30 @@ function traerInfoScore(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoScore").empty();
-        let miTabla ="<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>MESSAGE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>SCORE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>MOTOBIKE</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>CLIENT</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>NAME</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>"; 
+                let miTabla = '<div class="container"><div class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].score.messa+ '</td>'; 
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].score.sco+ '</td>';
-			miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].motorbike.name+ '</td>'; 
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].client.idClient+ '</td>'; 	
-			miTabla += "<td style='text-align: center;'>"+ respuesta[i].client.name+ '</td>'; 
-                        miTabla += '<td><button  onclick="editarRegistroScore('+respuesta[i].idReservation+' )">Editar</button>';
-			miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Cliente: ${respuesta[i].reservation.client.name} </h5> 	
+                                        <h6 class ="card-subtitle mb-2 text-muted">Fecha: ${formatDate(respuesta[i].reservation.startDate)} - ${formatDate(respuesta[i].reservation.devolutionDate)} </h6> 		
+					<p class= "card-text"> ${respuesta[i].reservation.motorbike.name} <br> 		
+                                                               Score: ${respuesta[i].sco}<br>
+                                                               Mesnaje: ${respuesta[i].messa}</p>      
+                                        <button  onclick="editarRegistroScore(${respuesta[i].id_score} )" >Editar</button>
+                                        <button  onclick="eliminarRegistroScore(${respuesta[i].id_score} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-        miTabla += '</table>';
-	    $("#resultadoScore").append(miTabla);
-             $("#idReservationMesSc").val(""); 
-             $("#idScoreSc").val(""); 
-            $("#scoSc").val("");    
-            $("#messaSc").val("");
+                miTabla += '</div></div>';
+                $("#resultadoScore").append(miTabla);
+                $("#idReservationMesSc").val(""); 
+                $("#idScoreSc").val(""); 
+                $("#scoSc").val("");    
+                $("#messaSc").val("");
+                $('#listasScore').show();
+                pintarSelectScoreReservation();
 	},
     error : function(xhr, status) {
         alert('ha sucedido un problema:'+ status + json);
@@ -954,22 +934,78 @@ function traerInfoScore(){
 });
 }
 
-
-
-function editarRegistroScore (idReservation){
-
-    $.ajax({    
-    url : 'http://localhost/api/Reservation/'+idReservation,
+function pintarSelectScoreReservation(){
+	$.ajax({    
+    url : 'http://localhost/api/Reservation/all',
     type : 'GET',
     dataType : 'json',
     contentType: "application/json; charset=utf-8",
   
     success : function(respuesta) {
 		console.log(respuesta);
-                        $("#idReservationMesSc").val(respuesta.idReservation);
-                        $("#idScoreSc").val(respuesta.score.id_score);
-			$("#scoSc").val(respuesta.score.sco);
-                        $("#messaSc").val(respuesta.score.messa);
+		$("#scoreReservation").empty();
+		miSelect = '<option value="">Escoja una Reserva</option>';
+		for (i=0; i<respuesta.length; i++){
+                    if(respuesta[i].score == null){
+                        miSelect += '<option value='+ respuesta[i].idReservation+ '>'+respuesta[i].idReservation+'</option>';
+                    }                   		
+		}
+	    $("#scoreReservation").append(miSelect);    
+
+	},
+    error : function(xhr, status) {
+        alert('ha sucedido un problema en cargar las Reservas:'+ status);
+    }
+});
+	
+}
+
+function guardarInfoScore(){
+	let selectedReservation = $("#scoreReservation").children(":selected").attr("value");
+	if (selectedReservation.length > 0) {              
+            let misDatos = {
+                sco: $("#scoSc").val(),
+                messa: $("#messaSc").val(),
+                reservation:{idReservation:selectedReservation},
+
+            };
+            let datosJson = JSON.stringify(misDatos); 
+            $.ajax(    
+                    'http://localhost/api/Score/save',
+                    {data: datosJson,
+                    type : 'POST',
+                    dataType : 'json',
+                    contentType: "application/json; charset=utf-8",
+
+                    statusCode : {
+                        201 :  function() {
+                            alert("Registro Guardado!");
+                            traerInfoScore();	
+                        }
+                    }
+                    });
+	}
+	else
+        {
+            alert('Debe escoger una Reserva');
+        }
+}
+
+
+
+function editarRegistroScore (idScore){
+     $('#listasScore').hide();
+    $.ajax({    
+    url : 'http://localhost/api/Score/'+idScore,
+    type : 'GET',
+    dataType : 'json',
+    contentType: "application/json; charset=utf-8",
+  
+    success : function(respuesta) {
+		console.log(respuesta);
+                        $("#idScoreSc").val(respuesta.id_score);
+			$("#scoSc").val(respuesta.sco);
+                        $("#messaSc").val(respuesta.messa);
 
 	},
     error : function(xhr, status) {
@@ -980,13 +1016,13 @@ function editarRegistroScore (idReservation){
 
 function actualizarInfoScore(){
 	let misDatos = {
-		idReservation: $("#idReservationMesSc").val(),
-                score:{id_score:$("#idScoreSc").val() ,sco:$("#scoSc").val(),messa:$("#messaSc").val()}
-
+                id_score:$("#idScoreSc").val(),
+                sco:$("#scoSc").val(),
+                messa:$("#messaSc").val()
 	};
 	let datosJson = JSON.stringify(misDatos); 
 	$.ajax(    
-    'http://localhost/api/Reservation/update',
+    'http://localhost/api/Score/update',
 	{data: datosJson,
     type : 'PUT',
     dataType : 'json',
@@ -997,6 +1033,22 @@ function actualizarInfoScore(){
                     alert("Registro Actualizado");
                     traerInfoScore();	
                     }
+		}
+	});
+}
+
+function eliminarRegistroScore(idScore){
+	$.ajax(    
+    'http://localhost/api/Score/'+idScore,
+	{type : 'DELETE',
+    dataType : 'json',
+    contentType: "application/json; charset=utf-8",
+  
+    statusCode : {
+		204 :  function() {
+			alert("Registro Eliminado!");
+        	traerInfoScore();
+			}
 		}
 	});
 }
@@ -1016,19 +1068,21 @@ function traerInformacionAdmin(){
     success : function(respuesta) {
 		console.log(respuesta);
 		$("#resultadoAdmin").empty();
-        let miTabla = "<table  style='border:1px solid black'><tr><td style='width: 200px; color: red; text-align: center;'>NAME</td>";
-			miTabla +="<td style='width: 200px; color: red; text-align: center;'>EMAIL</td></tr>";
-			miTabla +="<tr><td style='width: 200px; text-align: center;'>---------------</td>";
-			miTabla +="<td style='width: 200px; text-align: center;'>---------------</td></tr>";    
+		let miTabla = '<div class="container"><div  class= "row">';
 		for (i=0; i<respuesta.length; i++){
-			miTabla += '<tr>';
-                        miTabla += "<td style='text-align: center;'>"+ respuesta[i].name+ '</td>'; 				
-                        miTabla +=  "<td style='text-align: center;'>"+ respuesta[i].email+ '</td>';
-                        miTabla += '<td><button  onclick="editarRegistroAdmin('+respuesta[i].id+' )">Editar</button>';
-                        miTabla += '<td><button  onclick="eliminarRegistroAdmin('+respuesta[i].id+' )">Eliminar</button>';
-                        miTabla += '</tr>';
+			miTabla += `
+			        <div class="card m-2" >
+                                    <div class="card-body" >
+					<h5 class ="card-title">Nombre: ${respuesta[i].name}</h5> 		
+                                        <h6 class ="card-subtitle mb-2 text-muted">Correo </h6> 		
+					<p class= "card-text"> ${respuesta[i].email}</p>
+                                        <button  onclick="editarRegistroAdmin(${respuesta[i].id} )" >Editar</button>
+					<button  onclick="eliminarRegistroAdmin(${respuesta[i].id} )">Borrar</button>
+                                    </div>
+                                </div>
+                `
 		}
-        miTabla += '</table>';
+                miTabla += '</div></div>';
 	    $("#resultadoAdmin").append(miTabla);
 		$("#idAdmin").val("");
 		$("#nameAdmin").val("");
